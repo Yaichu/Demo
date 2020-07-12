@@ -2,15 +2,12 @@ pipeline {
 
     agent { label "master" }
 
-    // options {
-    //     ansiColor('xterm')
-    // }
 
     stages {
-        // stage("test") {
-        //     node('master') {
-        //         checkout scm
-        // }
+        stage("test") {
+            node('master') {
+                checkout scm
+        }
 
 
         stage("build") {
@@ -23,14 +20,13 @@ pipeline {
             }
             stage('Build') {
                 steps {
-                    sh 'mvn -B -DskipTests clean package'
+                    sh 'mvn -DskipTests clean package'
                 }
         }
         }
 
         stage("build img") {
             steps {
-                // unstash 'demo-jar'
                 script {
                     env["IMAGE"] = "${env.PROJ}:${env.BRANCH_NAME}.${env.BUILD_ID}"
                     def customImage = docker.build(env["IMAGE"])
@@ -42,9 +38,9 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    sh 'docker stop || echo 'no container to stop''
-                    sh 'docker rm || echo 'no container to remove''
-                    sh 'docker run '
+                    sh 'docker stop $IMAGE || echo 'no container to stop''
+                    sh 'docker rm $IMAGE || echo 'no container to remove''
+                    sh 'docker run -p 8080:8080 $IMAGE'
                 }
             }
         }
