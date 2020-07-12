@@ -16,16 +16,16 @@ pipeline {
         stage("build") {
             agent {
                 docker {
-                    image "maven:3-jdk-8-slim"
-                    args "-v \$HOME/.m2:/root/.m2"
+                    image 'maven:3-alpine'
+                    args '-v /root/.m2:/root/.m2'
                     label 'master'
                 }
             }
-            steps {
-                sh 'mvn --version'
-                sh 'mvn clean install -ntp -B -e'
-                stash includes: 'target/demo.jar', name: 'demo-jar'
-            }
+            stage('Build') {
+                steps {
+                    sh 'mvn -B -DskipTests clean package'
+                }
+        }
         }
 
         stage("build img") {
