@@ -30,7 +30,7 @@ pipeline {
 
         stage("build img") {
             steps {
-                unstash 'demo-jar'
+                // unstash 'demo-jar'
                 script {
                     env["IMAGE"] = "${env.PROJ}:${env.BRANCH_NAME}.${env.BUILD_ID}"
                     def customImage = docker.build(env["IMAGE"])
