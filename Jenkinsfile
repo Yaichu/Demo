@@ -7,20 +7,9 @@ pipeline {
     // }
 
     stages {
-        stage("test") {
-            node('master') {
-                checkout scm
-        }
-
-        // stage("conf") {
-        //     steps {
-        //         script {
-        //             def pom = readMavenPom file: 'pom.xml'
-        //             env['PROJ'] = pom.artifactId
-        //             def inventory = readTrusted 'deployment/inventory'
-        //             env['SERVER_IP'] = inventory.split('\n')[1]
-        //         }
-        //     }
+        // stage("test") {
+        //     node('master') {
+        //         checkout scm
         // }
 
 
