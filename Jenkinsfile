@@ -58,15 +58,6 @@ pipeline {
             }
         }
 
-        stage("test-deployment") {
-            steps {
-                script {
-                    sleep 30
-                    sh "curl http://${env.SERVER_IP}:8080/
-                }
-            }
-        }
-
 
     }
 
