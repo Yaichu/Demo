@@ -8,7 +8,7 @@ pipeline {
 
     stages {
         stage("test") {
-            node('linux') {
+            node('master') {
                 checkout scm
         }
 
