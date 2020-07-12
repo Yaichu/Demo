@@ -42,7 +42,18 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
+                    sh 'docker stop || echo 'no container to stop''
+                    sh 'docker rm || echo 'no container to remove''
                     sh 'docker run '
+                }
+            }
+        }
+
+        stage("test-deployment") {
+            steps {
+                script {
+                    sleep 30
+                    sh "curl http://ec2-3-126-92-181.eu-central-1.compute.amazonaws.com:8080"
                 }
             }
         }
